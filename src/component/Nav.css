@@ -1,0 +1,54 @@
+.nav-wrapper {
+  height: 10vh;
+  width: 100%;
+  background: transparent;
+  position: fixed;
+  top: 0;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: lightblue;
+  opacity: .7;
+}
+.Logo-div{
+  padding-left: 30px;
+}
+
+.forum-button {
+  cursor: pointer;
+  border-radius: 10px;
+  border: 2px solid #008CBA;
+  background: white;
+  color: black;
+  padding: 10px 10px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  text-transform: uppercase;
+
+}
+.forum-button:hover {
+  background-color: #008CBA;
+  color: white;
+}
+.nav-buttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 30px;
+}
+.user-icon{
+  display: inline-block;
+  padding-left: 60px;
+}
+.settings-icon{
+  display: inline-block;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+

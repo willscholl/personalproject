@@ -1,0 +1,11 @@
+.login-body {
+  width: 100%;
+  height: 40px;
+  background: #dad;
+  margin-top: 80px;
+}
+.signup-body{
+  width: 100%;
+  height: 30px;
+  background: #ada;
+}

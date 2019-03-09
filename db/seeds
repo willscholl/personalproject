@@ -1,0 +1,13 @@
+CREATE TABLE if not exists users
+(
+  id SERIAL PRIMARY KEY,
+  is_admin BOOLEAN default false,
+  username VARCHAR(120),
+  password text,
+  year integer,
+  make varchar,
+  model varchar,
+  location varchar,
+  profile_pic varchar
+);
+
