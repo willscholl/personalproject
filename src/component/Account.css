@@ -1,0 +1,44 @@
+.account-wrapper {
+  height: 150vh;
+  width: 100%;
+  background: lightgreen;
+  display: flex;
+  justify-content: center;
+}
+.account-paper{
+  margin-top: 150px;
+  height: 600px;
+  width: 400px;
+  background: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.account-profilepic{
+  margin-top: 60px;
+  height: 100px;
+  width:100px;
+  background: red; /*Image*/
+  border-radius: 100%;
+}
+.account-username {
+  margin-top: 50px;
+  height: 30px;
+  width: 150px;
+  justify-content: center;
+  align-content: center;
+}
+.account-password{
+  margin-top: 40px;
+  height: 30px;
+  width: 150px;
+  justify-content: center;
+  align-content: center;
+}
+.account-emailnotification{
+  margin-top: 20px;
+  height: 30px;
+  width: 150px;
+  justify-content: center;
+  align-content: center;
+}
