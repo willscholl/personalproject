@@ -6,6 +6,7 @@ import Auth from "./component/Auth";
 import Account from "./component/Account";
 import Post from './component/Post'
 import Register from "./component/Register";
+import Topic from "./component/Topic";
 import NewDiscussion from "./component/NewDiscussion";
 
 export default (
@@ -14,8 +15,9 @@ export default (
     <Route path="/login" component={Auth} />
     <Route path="/register" component={Register} />
     <Route path="/account" component={Account} />
-    <Route path="/forum/post" component={Post} />
-    <Route path="/forum" component={Forum} />
+    <Route path="/forum/:topic/:id" component={Post} />
+    <Route exact path="/forum" component={Forum} />
+    <Route path="/forum/:topic" component={Topic} />
     <Route exact path="/" exact component={Dashboard} />
   </Switch>
 );

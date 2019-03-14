@@ -4,6 +4,9 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { updateUser } from "./../ducks/reducer";
 import "./Auth.css"
+import { withStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
 
 class Auth extends Component {
   constructor(props) {
@@ -41,19 +44,29 @@ class Auth extends Component {
 
   render() {
     const { usernameOrEmail, password } = this.state;
+    const { classes } = this.props
     return (
         <div className='login-body'>
-          <input
-            placeholder="Username or Email" 
+          <TextField
+            id="usernameOrEmail"
+            className='useremail-input'
+            label="Username or Email"
+            margin="normal"
+            type="usernameOrEmail"
             value={usernameOrEmail}
             onChange={e => this.handleChange("usernameOrEmail", e.target.value)}
           />
-          <input
-            placeholder='password'
+         <br/>
+          <TextField
+            id='password'
+            className='password-input'
+            label="Password"
+            margin="normal"
             type="password"
             value={password}
             onChange={e => this.handleChange("password", e.target.value)}
           />
+          <br/>
           <button onClick={this.login}>Login</button>
           <div>
             <Link to='/register'>

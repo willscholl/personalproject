@@ -2,12 +2,13 @@ const bcrypt = require("bcryptjs");
 
 const posts = [
   {
-    id:0,
-    title: 'Test Post',
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    topic: 'test'
+    id: 0,
+    title: "Test Post",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    topic: "test"
   }
-]
+];
 
 module.exports = {
   register: async (req, res) => {
@@ -18,9 +19,9 @@ module.exports = {
     let takenEmail = await db.check_email({ email });
     takenUsername = +takenUsername[0].count;
     takenEmail = +takenEmail[0].count;
-    console.log(takenEmail, takenUsername)
+    console.log(takenEmail, takenUsername);
     if (takenUsername !== 0 || takenEmail !== 0) {
-        return res.sendStatus(409);
+      return res.sendStatus(409);
     }
     let salt = bcrypt.genSaltSync(10);
     let hash = bcrypt.hashSync(password, salt);
@@ -63,9 +64,9 @@ module.exports = {
   },
 
   logout: (req, res) => {
-    req.session.destroy(function(){;
-    res.sendStatus(200)
-    })
+    req.session.destroy(function() {
+      res.sendStatus(200);
+    });
   },
 
   isLoggedIn: (req, res) => {
@@ -78,19 +79,36 @@ module.exports = {
   },
 
   create: async (req, res) => {
-    const { title, content, topic } = req.body;
+    const { title, content, topic_id } = req.body;
     const { session } = req;
-    console.log(req.session)
+    console.log(req.session);
     const { id } = req.session.user;
     const db = req.app.get("db");
 
-    let post = await db.create_post([ id, title, content, topic ])
+    let post = await db.create_post([id, title, content, topic_id]);
   },
 
   getTopics: async (req, res) => {
     const db = req.app.get("db");
-    let topics = await db.get_topic()
-    res.status(200).send(topics)
+    let topics = await db.get_topics();
+    res.status(200).send(topics);
     // console.log(topics)
+  },
+  getTopic: async (req, res) => {
+    const db = req.app.get("db");
+    const { topic } = req.params;
+    // console.log(topic);
+    let gettopic = await db.get_topic([topic]);
+    res.status(200).send(gettopic);
+  },
+  getPost: async (req, res) => {
+    const db = req.app.get("db");
+    req.params.id = parseInt(req.params.id)
+    let { id } = req.params;
+    // console.log(req.params);
+    let getpost = await db.get_post([id]);
+    getpost[0] = getpost[0].row_to_json
+    console.log(getpost[0]);
+    res.status(200).send(getpost[0]);
   }
 };

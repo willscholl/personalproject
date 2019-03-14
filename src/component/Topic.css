@@ -1,0 +1,15 @@
+.discussions-wrapper{
+  margin-top: 100px;
+  margin-left: 50px;
+  height: 100px;
+  width: 500px;
+  background: grey;
+  display: flex;
+}
+.discussion-account-info{
+  background: orange;
+  width: 25%;
+}
+.post-info{
+
+}

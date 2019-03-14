@@ -44,3 +44,5 @@ app.get('/auth/isLoggedIn', ctrl.isLoggedIn)
 //FORUMS
 app.post('/api/post', ctrl.create);
 app.get('/api/topics', ctrl.getTopics)
+app.get('/api/topic/:topic', ctrl.getTopic)
+app.get('/api/forum/:id', ctrl.getPost)

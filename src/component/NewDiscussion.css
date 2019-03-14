@@ -10,7 +10,7 @@
 .new-post-wrapper{
   border-radius: 5px;
   margin-top: 50px;
-  height: 600px;
+  height: 800px;
   width: 800px;
   background: #a9a9a9;
   display: flex;
@@ -32,9 +32,12 @@
   border-bottom: 2px solid red;
   background: transparent;
 }
-.content-quil{
+.content-quill{
   text-align: left;
   padding-top: 20px;
+}
+.quillbox {
+  width: 95%;
 }
 .content-attachments{
   text-align: left;
