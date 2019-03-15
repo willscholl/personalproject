@@ -5,15 +5,17 @@
 
 select row_to_json(p)
 from(
-    select id, user_id, title, content, topic_id,
+    select po.id, user_id, title, content, topic_id, date, profile_pic,
         (
             select array_to_json(array_agg(row_to_json(r)))
             from (
                 select *
                 from replies
-                where post_id = posts.id
+                join users on user_id = users.id
+                where post_id = po.id
             )r
         ) replies
-    from posts
-    where id = $1
-)p
+    from posts as po
+    join users on po.user_id = users.id
+    where po.id = $1
+)p;

@@ -79,13 +79,13 @@ module.exports = {
   },
 
   create: async (req, res) => {
-    const { title, content, topic_id } = req.body;
+    const { title, content, topic_id} = req.body;
     const { session } = req;
     console.log(req.session);
     const { id } = req.session.user;
     const db = req.app.get("db");
-
-    let post = await db.create_post([id, title, content, topic_id]);
+    let date = new Date()
+    let post = await db.create_post([id, title, content, topic_id, date]);
   },
 
   getTopics: async (req, res) => {

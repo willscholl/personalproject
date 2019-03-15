@@ -40,6 +40,7 @@ class NewDiscussion extends Component {
       content: "",
       pictures: [],
       topic: "",
+      date: '',
       alltopics: [],
       isClearable: true,
       imageToUpload: null

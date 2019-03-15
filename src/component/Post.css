@@ -1,43 +1,135 @@
 .post-wrapper{
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
-  margin-top: 60px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .content-wrapper{
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 .post-title{
-  margin: 50px;
+  margin-left: 50px;
   color: orange;
 }
 .first-post{
-  margin-left: 50px;
+  background: ivory;
+  margin-left: 30px;
   margin-top: 30px;
   display: flex;
-  height: 200px;
-  width: 90%;
-  background: #dad;
+  width: 95%;
+  border: 2px solid grey
 }
 .author-info{
-  width: 200px;
-  background: yellow;
+  width: 150px;
+  display: flex;
+  /* margin: 20px; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-right: 2px solid
 }
-.post-content{
-  margin-left: 10px;
+.author-pic{
+  height: 70px;
+  width: 70px;
+  border-radius: 100%;
+}
+.post-content-wrapper{
+  margin: 10px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start
+  align-items: flex-start;
+  width: 85%;
+  /* background: orange */
+}
+.reply-content-wrapper{
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 85%;
+}
+.post-upper-info{
+  /*conditionally render the whole page, if session user id = author id display edit button*/
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.post-content {
+  margin-top: 20px;
+  /* background: yellow */
 }
 .first-reply{
   margin-top: 30px;
-  margin-left: 80px;
+  margin-left: 30px;
   display: flex;
+  width: 95%;
+  background: orange;
+  display: flex;
+  border: 2px solid grey
 }
 .reply-content{
   margin-left: 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start
+}
+.create-reply-wrapper{
+  /* height: 100px; */
+  width: 95%;
+  margin: 30px 30px 30px ;
+
+  border: 2px solid grey;
+  display: flex;
+}
+.user-content{
+  height: 100%;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 2px solid grey;
+}
+.user-img{
+  margin: 10px;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  background: orange;
+}
+.reply-input{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.reply-input-wrapper{
+  /* height: 65px; */
+  width: 100%;
+  background: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+.reply-quill{
+  height: 80%;
+  width: 98%;
+  background: white;
+}
+.reply-quill p {
+  float: left;
+  margin: 13px;
+}
+.quillbox-reply {
+  /* padding-top: 30px; */
+  min-height: 100px;
+  width: 100% ;
+  background: white;
+  margin: 0;
 }

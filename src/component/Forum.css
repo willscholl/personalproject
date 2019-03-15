@@ -1,27 +1,27 @@
 .forum-wrapper {
-  background: grey;
+  background: lightgrey;
   height: 100vh;
+  padding-top: 130px;
 }
-.topic-text{
-  
+.select-wrapper{
+
 }
-.forum-topic {
-  margin-top: 50px;
-  margin-left: 20px; 
+.recentposts {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 }
-.topic1{
-  margin-top: 20px;
-  width: 700px;
-  text-align: left;
+.mostrecent1{
+  display: flex;
+  flex-direction: row;
   align-items: center;
+  padding-bottom: 20px;
 }
-.topic2{
-  margin-left: 10px;
+.profile-pic{
   height: 50px;
-  width: 650px;
-  background: lightcoral;
-  opacity: .4;
+  width: 50px;
+  border-radius: 100%;
+  background: orange;
+}
+.recent1text{
+  padding-left: 20px;
 }
