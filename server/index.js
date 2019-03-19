@@ -37,12 +37,18 @@ massive(CONNECTION_STRING).then(db => {
 
 //AUTH
 app.post("/auth/register", ctrl.register);
-app.post('/auth/login', ctrl.login)
-app.post('/auth/logout', ctrl.logout)
-app.get('/auth/isLoggedIn', ctrl.isLoggedIn)
+app.post('/auth/login', ctrl.login);
+app.post('/auth/logout', ctrl.logout);
+app.get('/auth/isLoggedIn', ctrl.isLoggedIn);
 
 //FORUMS
+app.get('/api/topics', ctrl.getTopics);
+app.get('/api/topic/:topic', ctrl.getDiscussions);
+app.get('/api/forum/:id', ctrl.getPost);
+
 app.post('/api/post', ctrl.create);
-app.get('/api/topics', ctrl.getTopics)
-app.get('/api/topic/:topic', ctrl.getTopic)
-app.get('/api/forum/:id', ctrl.getPost)
+app.put('/api/post', ctrl.updatedPost);
+
+app.post('/api/reply', ctrl.createReply);
+app.put('/api/reply', ctrl.updatedReply);
+app.delete('/api/reply/:reply_id', ctrl.deleteReply)

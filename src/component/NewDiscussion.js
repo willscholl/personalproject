@@ -109,7 +109,8 @@ class NewDiscussion extends Component {
       topic_id: this.state.topic.topic_id
     };
     try {
-      let res = await axios.post("/api/post", post);
+      await axios.post("/api/post", post);
+      
     } catch (err) {
       alert("Please fill out the required feilds");
     }
@@ -122,7 +123,7 @@ class NewDiscussion extends Component {
   };
 
   render() {
-    console.log(this.state.content)
+    // console.log(this.state.content)
     const { isClearable } = this.state;
     const mappedTopics = this.state.alltopics.map(topic => {
       return {

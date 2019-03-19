@@ -17,9 +17,9 @@ class Topic extends Component {
   }
 
   getTopic = async () => {
-    const { discussions } = this.state;
+    // const { discussions } = this.state;
     let res = await axios.get(`/api/topic/${this.props.match.params.topic}`);
-    // console.log(res.data);
+    console.log(res.data, this.props.match.params.topic);
     this.setState({
       discussions: res.data,
       topic: this.props.match.params.topic
@@ -30,9 +30,6 @@ class Topic extends Component {
     const discussionsMapped = this.state.discussions.map(discussion => {
       return (
         <div className="discussions-wrapper" key={discussion.id}>
-          <div className='discussion-account-info'>
-            ACCOUNT INFO 
-          </div>
           <div className='post-info'>
             <Link to={`/forum/Car & Automotive/` + discussion.id}>{discussion.title}</Link>
             <div dangerouslySetInnerHTML={{ __html: discussion.content}}></div>
@@ -41,7 +38,14 @@ class Topic extends Component {
       );
     });
     // console.log(this.props);
-    return <div>{discussionsMapped}</div>;
+    return (
+      <div className="body-wrapper">
+        <div ></div>
+        <div >
+          {discussionsMapped}
+        </div>
+      </div>
+    )
   }
 }
 

@@ -3,6 +3,8 @@ import axios from "axios";
 import "./Post.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { connect } from "react-redux";
+
 
 const Editor = {};
 Editor.modules = {};
@@ -53,7 +55,10 @@ class Post extends Component {
     this.state = {
       post: {},
       showQuill: false,
-      content: ""
+      reply: "",
+      quillValue: '',
+      showSecondQuill: false, 
+      secondQuillValue: ''
     };
 
     this.quillRef = null;
@@ -63,11 +68,49 @@ class Post extends Component {
   componentDidMount() {
     this.getPost();
     this.attachQuillRefs();
+    this.getUser();
   }
 
   componentDidUpdate() {
     this.attachQuillRefs();
   }
+
+  toggleQuill = (i) => {
+    let post = this.state.post
+    post.replies[i].showQuill = !post.replies[i].showQuill
+    this.setState({post})
+  }
+
+  toggleSecondQuill = () => {
+    let post = this.state.post
+    post.showSecondQuill = !post.showSecondQuill
+    this.setState({post})
+  }
+
+  handlePostQuillChange = (html, i) => {
+    let post = this.state.post
+    post.secondQuillValue = html
+    // console.log(post.secondQuillValue)
+    this.setState({post})
+  }
+
+  handleReplyQuillChange = (html, i) => {
+    let post = this.state.post
+    post.replies[i].quillValue = html
+    // console.log(post.replies[i].quillValue)
+    this.setState({post})
+  }
+
+  getUser = async () => {
+    const { id } = this.props;
+    if (!id) {
+      try {
+        let res = await axios.get("/auth/isLoggedIn");
+        console.log(res.data)
+        this.props.updateUser(res.data);
+      } catch (err) {}
+    }
+  };
 
   attachQuillRefs() {
     if (this.reactQuillRef) {
@@ -79,7 +122,7 @@ class Post extends Component {
   }
 
   handleQuillChange = html => {
-    this.setState({ content: html });
+    this.setState({ reply: html });
   };
 
   handleChange(prop, val) {
@@ -88,75 +131,181 @@ class Post extends Component {
     });
   }
 
+
   getPost = async () => {
     // console.log(this.props.match.params);
     // const { post } = this.state;
     let res = await axios.get(`/api/forum/${this.props.match.params.id}`);
-    console.log(res.data);
+    // console.log(res.data);
     if (res.data.replies) {
       for (let i = 0; i < res.data.replies.length; i++) {
         res.data.replies[i].showQuill = false;
+        res.data.replies[i].quillValue = res.data.replies[i].reply
       }
     }
-    this.setState({ post: res.data });
-    // console.log({ post });
+    this.setState({ post: res.data, secondQuillValue: res.data.content });
+    // console.log(res.data);
+  };
+
+  createReply = async () => { 
+    let reply = {
+      reply: this.state.reply,
+      post_id: this.state.post.id
+    };
+    console.log(reply)
+    try {
+      await axios.post("/api/reply", reply);
+      this.getPost()
+      this.setState({showQuill: false, reply: ''})
+    } catch (err) {
+      // alert("Please fill out the required fields");
+    }
+  };
+
+  saveReply = async (i) => {
+    let updatedReply = {
+      reply: this.state.post.replies[i].quillValue,
+      reply_id: this.state.post.replies[i].reply_id
+    }
+    try {
+      await axios.put("/api/reply", updatedReply)
+      this.getPost()
+      this.setState({showQuill: false})
+    } catch (err) {
+      console.log(err)
+    }
+  };
+
+  savePost = async (i) => {
+    let updatedPost = {
+      content: this.state.post.secondQuillValue,
+      post_id: this.state.post.id
+    }
+    try {
+      await axios.put("/api/post", updatedPost)
+      this.getPost()
+      this.setState({showSecondQuill: false})
+    } catch (err) {
+      console.log(err)
+    }
+  };
+
+  deleteReply = async (i) => {
+    let reply_id = this.state.post.replies[i].reply_id
+    try {
+      await axios.delete(`/api/reply/${reply_id}`)
+      this.getPost()
+      this.setState({showSecondQuill: false})
+    } catch (err) {
+      console.log(err)
+    }
+  };
+
+  deleteReply = async (i) => {
+    let reply_id = this.state.post.replies[i].reply_id
+    try {
+      await axios.delete(`/api/reply/${reply_id}`)
+      this.getPost()
+      this.setState({showSecondQuill: false})
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   render() {
-    console.log(this.state.post);
+    console.log(this.state)
     let repliesMapped;
     if (this.state.post.replies) {
-      const { replies } = this.state.post;
-      console.log(replies);
-      repliesMapped = this.state.post.replies.map(reply => {
+      // const { id } = this.props
+      repliesMapped = this.state.post.replies.map((reply, i) => {
         return (
-          <div className="first-reply" key={reply.id}>
+          <div className="first-reply" key={i}>
             <div className="author-info">
-              <a>{reply.user_id}</a>
-              <div className="author-pic">
-                <image src={reply.profile_pic} alt="profilepicture" />
+              <p>{reply.user_id}</p>
+              <div>
+                <img className='author-pic' src={reply.profile_pic} width="70px" alt="profilepicture" />
               </div>
             </div>
             <div className="reply-content-wrapper">
-              <div className="post-upper-info">
-                <a>{reply.date}</a>
-                <button>Edit</button>
+              <div className="reply-upper-info">
+                <p >{reply.date}</p>
+                <div className='edit-delete-butts'> 
+                {reply.showQuill ?  <React.Fragment><button onClick={()=>this.saveReply(i)}>Save</button><button onClick={() =>this.deleteReply(i)}>Delete</button></React.Fragment>: <React.Fragment> {reply.user_id === this.props.id ? <button onClick={() => this.toggleQuill(i)}>Edit</button> : null } </React.Fragment> } </div>
               </div>
-              <div
-                dangerouslySetInnerHTML={{ __html: reply.reply }}
-                className="post-content"
-              />
+              <div>
+                { reply.showQuill 
+                ?
+                  <ReactQuill
+                    ref={el => {
+                      this.reactQuillRef = el;
+                    }}
+                    theme={"snow"}
+                    onChange={(html) => this.handleReplyQuillChange(html, i)}
+                    modules={Editor.modules}
+                    formats={Editor.formats}
+                    defaultValue={reply.quillValue}
+                    value={reply.quillValue}
+                    placeholder="Write your reply here..."
+                    className="quillbox-reply"
+                  />
+                :
+                  <div
+                    dangerouslySetInnerHTML={{ __html: reply.reply }}
+                    className="post-content"
+                  />
+                }
+              </div>
             </div>
           </div>
         );
       });
-    }
-
+    } 
     return (
       <div className="post-wrapper">
         <div className="content-wrapper">
           <p className="post-title">{this.state.post.title}</p>
           <div className="first-post">
             <div className="author-info">
-              <a>{this.state.post.user_id}</a>
-              <div className="author-pic">
-                <image src={this.state.post.profile_pic} alt="profilepicture" />
+             <p>{this.state.post.user_id}</p>
+              <div>
+                <img className="author-pic" src={this.state.post.profile_pic} alt="profilepicture" />
               </div>
             </div>
             <div className="post-content-wrapper">
               <div className="post-upper-info">
-                <a>{this.state.post.date}</a>
-                <button>Edit</button>
+                <p>{this.state.post.date}</p>
+                <div className='edit-delete-butts'>
+                  {this.state.post.showSecondQuill ?  <React.Fragment><button>Save</button><button>Delete</button></React.Fragment>: <React.Fragment> {this.state.post.user_id === this.props.id ? <button onClick={() => this.toggleSecondQuill()}>Edit</button> : null } </React.Fragment> }
+                </div>
               </div>
-              <div
-                dangerouslySetInnerHTML={{ __html: this.state.post.content }}
-                className="post-content"
-              />
+              <div>
+                { this.state.post.showSecondQuill 
+                ?
+                  <ReactQuill
+                    ref={el => {
+                      this.reactQuillRef = el;
+                    }}
+                    theme={"snow"}
+                    onChange={(html) => this.handlePostQuillChange(html)}
+                    modules={Editor.modules}
+                    formats={Editor.formats}
+                    defaultValue={this.state.secondQuillValue}
+                    value={this.state.secondQuillValue}
+                    placeholder="Write your post here..."
+                    className="quillbox-reply"
+                  />
+                :
+                  <div
+                    dangerouslySetInnerHTML={{ __html: this.state.post.content }}
+                    className="post-content"
+                  />
+                }
+              </div>
             </div>
           </div>
           {repliesMapped}
           <div className="create-reply-wrapper">
-            <div className="user-img" />
+            <img className="user-img" src={this.props.profile_pic} alt=''/>
             <div className="reply-input">
               <div className="reply-input-wrapper">
                 {this.state.showQuill ? (
@@ -169,12 +318,12 @@ class Post extends Component {
                       onChange={this.handleQuillChange}
                       modules={Editor.modules}
                       formats={Editor.formats}
-                      defaultValue={this.state.content}
-                      value={this.state.content}
-                      placeholder="Testing Grounds"
+                      defaultValue={this.state.reply}
+                      value={this.state.reply}
+                      placeholder="Write your reply here..."
                       className="quillbox-reply"
                     />
-                    <button style={{}}>Submit</button>
+                    <button style={{ marginBottom: '10px'}} onClick={this.createReply}>Submit</button>
                   </div>
                 ) : (
                   <div
@@ -195,4 +344,13 @@ class Post extends Component {
   }
 }
 
-export default Post;
+const mapStateToProps = reduxState => {
+  return {
+    id: reduxState.id,
+    profile_pic: reduxState.profile_pic
+  };
+};
+
+export default connect(
+  mapStateToProps
+)(Post);

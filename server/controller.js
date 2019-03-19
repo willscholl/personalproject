@@ -4,11 +4,27 @@ const posts = [
   {
     id: 0,
     title: "Test Post",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     topic: "test"
   }
 ];
+
+function formatDate(date) {
+  var monthNames = [
+    "January", "February", "March",
+    "April", "May", "June", "July",
+    "August", "September", "October",
+    "November", "December"
+  ];
+
+  var day = date.getDate();
+  var monthIndex = date.getMonth();
+  var year = date.getFullYear();
+
+  return day + ' ' + monthNames[monthIndex] + ' ' + year;
+}
+
+
 
 module.exports = {
   register: async (req, res) => {
@@ -19,7 +35,7 @@ module.exports = {
     let takenEmail = await db.check_email({ email });
     takenUsername = +takenUsername[0].count;
     takenEmail = +takenEmail[0].count;
-    console.log(takenEmail, takenUsername);
+    // console.log(takenEmail, takenUsername);
     if (takenUsername !== 0 || takenEmail !== 0) {
       return res.sendStatus(409);
     }
@@ -28,7 +44,7 @@ module.exports = {
     let user = await db.register({ username, password: hash, email });
     user = user[0];
     session.user = user;
-    console.log({ session });
+    // console.log({ session });
     res.status(200).send(session.user);
   },
 
@@ -84,8 +100,47 @@ module.exports = {
     console.log(req.session);
     const { id } = req.session.user;
     const db = req.app.get("db");
-    let date = new Date()
+    let date = formatDate(new Date())
     let post = await db.create_post([id, title, content, topic_id, date]);
+    res.sendStatus(200)
+  },
+
+  updatedPost: async (req,res) => {
+    console.log(req.body)
+    const { post, post_id } = req.body
+    console.log(post, post_id)
+    const db = req.app.get("db");
+    await db.update_post([post, post_id])
+    res.sendStatus(200)
+  },
+
+  createReply: async (req,res) => {
+    console.log(req.body)
+    const { reply } = req.body
+    const { post_id } = req.body
+    // console.log(111, reply, post_id)
+    const { id: user_id } = req.session.user
+    // console.log(user_id)
+    const db = req.app.get("db");
+    let date = formatDate(new Date())
+    await db.create_reply([user_id, reply, post_id, date])
+    res.sendStatus(200)
+  },
+
+  updatedReply: async (req,res) => {
+    console.log(req.body)
+    const { reply, reply_id } = req.body
+    console.log(reply, reply_id)
+    const db = req.app.get("db");
+    await db.update_reply([reply, reply_id])
+    res.sendStatus(200)
+  },
+
+  deleteReply: async (req,res) => {
+    const { reply_id } = req.params
+    const db = req.app.get("db");
+    await db.delete_reply([reply_id])
+    res.sendStatus(200)
   },
 
   getTopics: async (req, res) => {
@@ -94,13 +149,15 @@ module.exports = {
     res.status(200).send(topics);
     // console.log(topics)
   },
-  getTopic: async (req, res) => {
+  
+  getDiscussions: async (req, res) => {
     const db = req.app.get("db");
     const { topic } = req.params;
     // console.log(topic);
-    let gettopic = await db.get_topic([topic]);
+    let gettopic = await db.get_discussions([topic]);
     res.status(200).send(gettopic);
   },
+
   getPost: async (req, res) => {
     const db = req.app.get("db");
     req.params.id = parseInt(req.params.id)
@@ -108,7 +165,7 @@ module.exports = {
     // console.log(req.params);
     let getpost = await db.get_post([id]);
     getpost[0] = getpost[0].row_to_json
-    console.log(getpost[0]);
+    // console.log(getpost[0]);
     res.status(200).send(getpost[0]);
   }
 };

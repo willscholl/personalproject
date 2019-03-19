@@ -4,8 +4,8 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { updateUser } from "./../ducks/reducer";
 import "./Auth.css"
-import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
+// import { withStyles } from '@material-ui/core/styles';
+// import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 
 class Auth extends Component {
@@ -44,7 +44,7 @@ class Auth extends Component {
 
   render() {
     const { usernameOrEmail, password } = this.state;
-    const { classes } = this.props
+    // const { classes } = this.props
     return (
         <div className='login-body'>
           <TextField

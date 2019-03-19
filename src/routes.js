@@ -11,6 +11,7 @@ import NewDiscussion from "./component/NewDiscussion";
 
 export default (
   <Switch>
+    <Route exact path="/" exact component={Dashboard} />
     <Route path="/forum/newdiscussion" component={NewDiscussion} />
     <Route path="/login" component={Auth} />
     <Route path="/register" component={Register} />
@@ -18,6 +19,5 @@ export default (
     <Route path="/forum/:topic/:id" component={Post} />
     <Route exact path="/forum" component={Forum} />
     <Route path="/forum/:topic" component={Topic} />
-    <Route exact path="/" exact component={Dashboard} />
   </Switch>
 );

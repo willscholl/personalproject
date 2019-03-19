@@ -8,13 +8,13 @@ import "./Dashboard.css";
 
 class Dashboard extends Component {
   componentDidMount() {
-    // this.getUser();
+    this.getUser();
   }
   getUser = async () => {
     const { id } = this.props;
     if (!id) {
       try {
-        let res = await axios.get("/auth/current");
+        let res = await axios.get("/auth/isLoggedIn");
         this.props.updateUser(res.data);
       } catch (err) {}
     }
@@ -34,7 +34,7 @@ class Dashboard extends Component {
             id="carouselExampleCaptions"
             className="carousel slide"
             data-ride="carousel"
-            style={{ width: "500px", height: '500px' }}>
+            style={{ width: "100%", height: '600px' }}>
             <ol className="carousel-indicators">
               <li
                 data-target="#carouselExampleCaptions"
@@ -47,7 +47,7 @@ class Dashboard extends Component {
             <div className="carousel-inner">
               <div className="carousel-item active">
                 <img
-                  src="https://cdn.motor1.com/images/mgl/PxqOA/s1/ford-mustang-vaughn-gittin-jr-nurburgring-drift.jpg"
+                  src="https://shopify-customerio.s3.amazonaws.com/tools/image_attachment/image/custom_resized_760f85dc-8ca6-4d13-839a-376d8c36e5b2.jpg"
                   className="d-block w-100 image-fluid"
                   alt="..."
                 />
@@ -61,6 +61,7 @@ class Dashboard extends Component {
               <div className="carousel-item">
                 <img
                   src="https://www.geobrugg.com/portal/projektdb/pics/berechnet/51735/slider_detail_NORDBETON-concrete-barriers-FIA-Intercontinental-Drift-Cup-2017-0051760.jpg"
+                  alt="..."
                   className="d-block w-100 image-fluid"
                 />
                 <div className="carousel-caption d-none d-md-block">
@@ -117,7 +118,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = reduxState => {
   return {
-    id: reduxState.id
+    id: reduxState.id,
+    username: reduxState.username
   };
 };
 const mapDispatchToProps = {

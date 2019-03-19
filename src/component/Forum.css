@@ -1,10 +1,7 @@
 .forum-wrapper {
   background: lightgrey;
-  height: 100vh;
+  height: 150vh;
   padding-top: 130px;
-}
-.select-wrapper{
-
 }
 .recentposts {
   display: flex;

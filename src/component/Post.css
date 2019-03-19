@@ -58,10 +58,22 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+.reply-upper-info{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.edit-delete-butts{
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 .post-content {
   margin-top: 20px;
-  /* background: yellow */
 }
 .first-reply{
   margin-top: 30px;
@@ -73,7 +85,6 @@
   border: 2px solid grey
 }
 .reply-content{
-  margin-left: 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start
@@ -99,7 +110,6 @@
   height: 50px;
   width: 50px;
   border-radius: 100%;
-  background: orange;
 }
 .reply-input{
   height: 100%;
