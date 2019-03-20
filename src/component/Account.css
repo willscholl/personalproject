@@ -7,7 +7,7 @@
 }
 .account-paper{
   margin-top: 150px;
-  height: 600px;
+  /* height: 600px; */
   width: 400px;
   background: grey;
   display: flex;

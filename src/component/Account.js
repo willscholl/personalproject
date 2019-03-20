@@ -3,6 +3,8 @@ import "./Account.css"
 import { connect } from "react-redux";
 import { updateUser, clearUser } from "./../ducks/reducer";
 import axios from "axios";
+import Dropzone from 'react-dropzone';
+import { GridLoader } from 'react-spinners';
 
 
 class Account extends Component {
@@ -16,7 +18,9 @@ class Account extends Component {
       make: '',
       model: '',
       profile_pic: '',
-      toggleLoation: false
+      toggleLoation: false,
+      isUploading: false,
+      url: 'http://via.placeholder.com/450x450'
     }
   }
   componentDidMount() {
@@ -41,6 +45,31 @@ class Account extends Component {
         <div className='account-paper'>
           <div >
             <img className='account-profilepic' src={this.props.profile_pic}/>
+            <Dropzone 
+              onDropAccepted={this.getSignedRequest}
+              style={{
+              position: 'relative',
+              width: 200,
+              height: 200,
+              borderWidth: 7,
+              marginTop: 100,
+              borderColor: 'rgb(102, 102, 102)',
+              borderStyle: 'dashed',
+              borderRadius: 5,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontSize: 28,
+              }}
+              accept='image/*'
+              multiple={false} >
+
+              { this.state.isUploading 
+                  ?  <GridLoader />
+                  : <p>Drop File or Click Here</p>
+              }
+
+            </Dropzone>
           </div>
           <div className='account-username'>
             <p>{this.props.username}</p>

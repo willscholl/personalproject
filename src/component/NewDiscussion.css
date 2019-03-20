@@ -1,16 +1,16 @@
 .body-wrapper {
   height: 100vh;
   width: 100%;
-  /* background-image: url('../assets/website-background-design.jpg'); */
+  background-image: url('../assets/website-background-design.jpg');
   background-size: cover;
   display: flex;
   justify-content: center;
-  margin-top: 80px;
+  /* margin-top: 60px; */
 }
 .new-post-wrapper{
   border-radius: 5px;
-  margin-top: 50px;
-  height: 800px;
+  margin: 100px 100px;
+  /* height: 600px; */
   width: 800px;
   background: #a9a9a9;
   display: flex;
@@ -25,13 +25,13 @@
   text-align: left;
   padding-top: 20px;
 }
-.new-post-title{
-  width: 150px;
+/* .new-post-title{
+  width: 250px;
   margin-left: 10px;
   border: none;
-  border-bottom: 2px solid red;
+  border-bottom: 2px solid lightcyan;
   background: transparent;
-}
+} */
 .content-quill{
   text-align: left;
   padding-top: 20px;
@@ -40,12 +40,14 @@
   width: 95%;
 }
 .content-attachments{
+  display: flex;
   text-align: left;
-  padding-top: 200px;
+  /* padding-top: 200px; */
 }
 .tag-select{
   margin-top: 20px;
-  width: 300px;
+  width: 400px;
+  background-color: transparent;
 }
 .switch {
   position: relative;
@@ -107,6 +109,6 @@ input:checked + .slider:before {
 .finish-buttons{
   display: flex;
   text-align: left;
-  padding-top: 20px;
-  
+  padding: 20px 0 20px;
+  justify-content: space-around
 }

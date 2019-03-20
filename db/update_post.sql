@@ -1,3 +1,3 @@
-update post 
-set post = $1
+update posts 
+set content = $1
 where id = $2

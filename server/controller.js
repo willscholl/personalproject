@@ -95,22 +95,21 @@ module.exports = {
   },
 
   create: async (req, res) => {
-    const { title, content, topic_id} = req.body;
+    const { title, content, topic_id, photo} = req.body;
     const { session } = req;
-    console.log(req.session);
     const { id } = req.session.user;
     const db = req.app.get("db");
     let date = formatDate(new Date())
-    let post = await db.create_post([id, title, content, topic_id, date]);
+    let post = await db.create_post([id, title, content, topic_id, date, photo]);
     res.sendStatus(200)
   },
 
   updatedPost: async (req,res) => {
     console.log(req.body)
-    const { post, post_id } = req.body
-    console.log(post, post_id)
+    const { content, post_id } = req.body
+    // console.log(content , post_id)
     const db = req.app.get("db");
-    await db.update_post([post, post_id])
+    await db.update_post([content, post_id])
     res.sendStatus(200)
   },
 
@@ -140,6 +139,13 @@ module.exports = {
     const { reply_id } = req.params
     const db = req.app.get("db");
     await db.delete_reply([reply_id])
+    res.sendStatus(200)
+  },
+
+  deletePost: async (req,res) => {
+    const { id } = req.params
+    const db = req.app.get("db");
+    await db.delete_post([id])
     res.sendStatus(200)
   },
 

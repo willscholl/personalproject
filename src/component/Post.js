@@ -4,6 +4,7 @@ import "./Post.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { connect } from "react-redux";
+// import { Route } from 'react-router-dom';
 
 
 const Editor = {};
@@ -54,8 +55,8 @@ class Post extends Component {
     super(props);
     this.state = {
       post: {},
-      showQuill: false,
       reply: "",
+      showQuill: false,
       quillValue: '',
       showSecondQuill: false, 
       secondQuillValue: ''
@@ -82,16 +83,11 @@ class Post extends Component {
   }
 
   toggleSecondQuill = () => {
-    let post = this.state.post
-    post.showSecondQuill = !post.showSecondQuill
-    this.setState({post})
+    this.setState({showSecondQuill: !this.state.showSecondQuill})
   }
 
-  handlePostQuillChange = (html, i) => {
-    let post = this.state.post
-    post.secondQuillValue = html
-    // console.log(post.secondQuillValue)
-    this.setState({post})
+  handlePostQuillChange = (html) => {
+    this.setState({secondQuillValue: html})
   }
 
   handleReplyQuillChange = (html, i) => {
@@ -106,7 +102,7 @@ class Post extends Component {
     if (!id) {
       try {
         let res = await axios.get("/auth/isLoggedIn");
-        console.log(res.data)
+        // console.log(res.data)
         this.props.updateUser(res.data);
       } catch (err) {}
     }
@@ -134,7 +130,7 @@ class Post extends Component {
 
   getPost = async () => {
     // console.log(this.props.match.params);
-    // const { post } = this.state;
+    const { post } = this.state;
     let res = await axios.get(`/api/forum/${this.props.match.params.id}`);
     // console.log(res.data);
     if (res.data.replies) {
@@ -144,7 +140,7 @@ class Post extends Component {
       }
     }
     this.setState({ post: res.data, secondQuillValue: res.data.content });
-    // console.log(res.data);
+    console.log(res.data);
   };
 
   createReply = async () => { 
@@ -176,9 +172,9 @@ class Post extends Component {
     }
   };
 
-  savePost = async (i) => {
+  updatePost = async () => {
     let updatedPost = {
-      content: this.state.post.secondQuillValue,
+      content: this.state.secondQuillValue,
       post_id: this.state.post.id
     }
     try {
@@ -201,12 +197,11 @@ class Post extends Component {
     }
   };
 
-  deleteReply = async (i) => {
-    let reply_id = this.state.post.replies[i].reply_id
+  deletePost = async () => {
+    let { id } = this.state.post
     try {
-      await axios.delete(`/api/reply/${reply_id}`)
-      this.getPost()
-      this.setState({showSecondQuill: false})
+      await axios.delete(`/api/post/${id}`)
+      this.props.history.push('/forum/Drift')
     } catch (err) {
       console.log(err)
     }
@@ -275,11 +270,11 @@ class Post extends Component {
               <div className="post-upper-info">
                 <p>{this.state.post.date}</p>
                 <div className='edit-delete-butts'>
-                  {this.state.post.showSecondQuill ?  <React.Fragment><button>Save</button><button>Delete</button></React.Fragment>: <React.Fragment> {this.state.post.user_id === this.props.id ? <button onClick={() => this.toggleSecondQuill()}>Edit</button> : null } </React.Fragment> }
+                  {this.state.showSecondQuill ?  <React.Fragment><button onClick={() => this.updatePost()}>Save</button><button onClick={() => this.deletePost()}>Delete</button></React.Fragment>: <React.Fragment> {this.state.post.user_id === this.props.id ? <button onClick={() => this.toggleSecondQuill()}>Edit</button> : null } </React.Fragment> }
                 </div>
               </div>
               <div>
-                { this.state.post.showSecondQuill 
+                { this.state.showSecondQuill 
                 ?
                   <ReactQuill
                     ref={el => {
@@ -301,6 +296,7 @@ class Post extends Component {
                   />
                 }
               </div>
+              <img src={this.state.post.photo} alt=''/>
             </div>
           </div>
           {repliesMapped}

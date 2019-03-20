@@ -1,4 +1,5 @@
 .dash-wrapper{
+  margin-top: 100px;
   width: 100%;
   /* background-image: url(./../assets/website-background-design.jpg);
   background-size: cover; */
@@ -10,19 +11,7 @@
   background: lightblue;
   opacity: .5;
 } */
-.featured-post-carousel{
-  margin-top: 100px;
-}
 
-.featured-post{
-  /* height: 40vh; */
-  width: 40%;
-  background: lightslategray;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .recents-dash{
   display: flex;
   justify-content: space-evenly;
@@ -45,5 +34,5 @@
   background: red;
 }
 .bd-example{
-  margin: 100px;
+  margin: 100px 0;
 }
