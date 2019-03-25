@@ -7,6 +7,7 @@ import { updateUser, clearUser } from "./../ducks/reducer";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import logo from './../assets/logo.png'
 
 class Nav extends Component {
   componentDidMount() {
@@ -31,7 +32,7 @@ class Nav extends Component {
     const { id } = this.props;
     return (
       <header className="nav-wrapper">
-        <div className="Logo-div"><img src='./../assets/Screen Shot 2019-03-25 at 12.48.24 PM (2).png' /></div>
+        <div className="Logo-div"><img width='200px' src={logo}/></div>
         <div className="nav-buttons">
           <Link to="/">
             <button className="forum-button">HOME</button>
