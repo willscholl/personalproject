@@ -36,6 +36,8 @@ massive(CONNECTION_STRING).then(db => {
   app.listen(SERVER_PORT, () => console.log(`bang on port ${SERVER_PORT}`));
 });
 
+app.use( express.static( `${__dirname}/../build` ) );
+
 app.get('/api/signs3', (req, res) => {
   aws.config = {
     region: 'us-west-1',
