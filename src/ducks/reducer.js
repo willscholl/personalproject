@@ -38,8 +38,8 @@ export default function reducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case UPDATE_USER:
-      const { id, username, email, profile_pic, location, year, make, model } = payload
-      return {...state, id, username, email, profile_pic, location, year, make, model, isLoggedIn:true}
+      const { id, username, password, email, profile_pic, location, year, make, model } = payload
+      return {...state, id, username, password, email, profile_pic, location, year, make, model, isLoggedIn:true}
     case CLEAR_USER:
       return {...state, id:0, username:'', email: '', profile_pic: '', location: '', year: '', make: '', model: '', isLoggedIn: false}
     default: 

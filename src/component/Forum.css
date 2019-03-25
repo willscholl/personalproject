@@ -1,6 +1,7 @@
 .forum-wrapper {
-  background: lightgrey;
-  height: 150vh;
+  background-image: url('../assets/website-background-design.jpg');
+  background-size: cover;
+  /* height: 150vh; */
   padding-top: 130px;
 }
 .recentposts {

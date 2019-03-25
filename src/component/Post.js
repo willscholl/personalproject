@@ -6,7 +6,6 @@ import "react-quill/dist/quill.snow.css";
 import { connect } from "react-redux";
 // import { Route } from 'react-router-dom';
 
-
 const Editor = {};
 Editor.modules = {};
 Editor.modules.toolbar = [
@@ -201,7 +200,7 @@ class Post extends Component {
     let { id } = this.state.post
     try {
       await axios.delete(`/api/post/${id}`)
-      this.props.history.push('/forum/Drift')
+      this.props.history.push('/forum')
     } catch (err) {
       console.log(err)
     }
@@ -296,7 +295,9 @@ class Post extends Component {
                   />
                 }
               </div>
-              <img src={this.state.post.photo} alt=''/>
+              <div>
+                <img style={{ width: '300px'}} src={this.state.post.photo} alt=''/>
+              </div>
             </div>
           </div>
           {repliesMapped}

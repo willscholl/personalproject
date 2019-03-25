@@ -5,7 +5,7 @@
 
 select row_to_json(p)
 from(
-    select po.id, user_id, title, content, topic_id, date, profile_pic, username, location, make, model, year,
+    select po.id, user_id, title, content, photo, topic_id, date, profile_pic, username, location, make, model, year,
         (
             select array_to_json(array_agg(row_to_json(re)))
             from (

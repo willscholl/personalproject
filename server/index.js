@@ -73,17 +73,23 @@ app.post("/auth/register", ctrl.register);
 app.post('/auth/login', ctrl.login);
 app.post('/auth/logout', ctrl.logout);
 app.get('/auth/isLoggedIn', ctrl.isLoggedIn);
+app.put('/auth/updateUser', ctrl.updateUser);
 
 //FORUMS
 app.get('/api/topics', ctrl.getTopics);
 app.get('/api/topic/:topic', ctrl.getDiscussions);
 app.get('/api/forum/:id', ctrl.getPost);
 
+//Posts
 app.post('/api/post', ctrl.create);
 app.put('/api/post', ctrl.updatedPost);
 app.delete('/api/post/:id', ctrl.deletePost)
 
+// Replies
 app.post('/api/reply', ctrl.createReply);
 app.put('/api/reply', ctrl.updatedReply);
 app.delete('/api/reply/:reply_id', ctrl.deleteReply);
+
+//Dash
+app.get('/api/top5', ctrl.getTop5)
 

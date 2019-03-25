@@ -46,6 +46,7 @@ class Auth extends Component {
     const { usernameOrEmail, password } = this.state;
     // const { classes } = this.props
     return (
+      <div className='auth-wrapper'>
         <div className='login-body'>
           <TextField
             id="usernameOrEmail"
@@ -56,7 +57,6 @@ class Auth extends Component {
             value={usernameOrEmail}
             onChange={e => this.handleChange("usernameOrEmail", e.target.value)}
           />
-         <br/>
           <TextField
             id='password'
             className='password-input'
@@ -66,7 +66,6 @@ class Auth extends Component {
             value={password}
             onChange={e => this.handleChange("password", e.target.value)}
           />
-          <br/>
           <button onClick={this.login}>Login</button>
           <div>
             <Link to='/register'>
@@ -74,6 +73,7 @@ class Auth extends Component {
             </Link>
           </div>
         </div>
+      </div>
     );
   }
 }

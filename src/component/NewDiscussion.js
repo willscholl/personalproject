@@ -97,7 +97,7 @@ class NewDiscussion extends Component {
       isClearable: true,
       imageToUpload: null,
       isUploading: false,
-      url: ""
+      url: "",
     };
 
     this.quillRef = null;

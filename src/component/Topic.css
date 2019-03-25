@@ -5,16 +5,18 @@
   width: 92%;
   background: grey;
   display: flex;
+  overflow: hidden;
 }
 .discussion-account-info{
   background: orange;
   width: 10%;
 }
-.body-wrapper{
-  /* margin-top: 50px; */
+.topic-body-wrapper{
+  background-image: url('../assets/website-background-design.jpg');
+  background-size: cover;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  background: lightcyan;
   background-size: cover;
 }
 .post-info{

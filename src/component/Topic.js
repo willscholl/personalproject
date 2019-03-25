@@ -32,16 +32,16 @@ class Topic extends Component {
         <div className="discussions-wrapper" key={discussion.id}>
           <div className='post-info'>
             <Link to={`/forum/Car & Automotive/` + discussion.id}>{discussion.title}</Link>
-            <div dangerouslySetInnerHTML={{ __html: discussion.content}}></div>
+            
+            <div style={{height: '20px', overflow:"hidden"}}><div dangerouslySetInnerHTML={{ __html: discussion.content}}></div></div>
           </div>
         </div>
       );
     });
     // console.log(this.props);
     return (
-      <div className="body-wrapper">
-        <div ></div>
-        <div >
+      <div className="topic-body-wrapper">
+        <div style={{marginTop: "100px"}}>
           {discussionsMapped}
         </div>
       </div>

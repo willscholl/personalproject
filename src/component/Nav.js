@@ -4,6 +4,9 @@ import "./Nav.css";
 import axios from "axios";
 import { connect } from "react-redux";
 import { updateUser, clearUser } from "./../ducks/reducer";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 class Nav extends Component {
   componentDidMount() {
