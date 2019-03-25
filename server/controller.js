@@ -215,8 +215,9 @@ module.exports = {
     const db = req.app.get("db");
     req.params.id = parseInt(req.params.id);
     let { id } = req.params;
-    // console.log(req.params);
+    console.log('the id is not here   .... ',id);
     let getpost = await db.get_post([id]);
+    console.log(getpost)
     getpost[0] = getpost[0].row_to_json;
     // console.log(getpost[0]);
     res.status(200).send(getpost[0]);

@@ -257,7 +257,7 @@ class Post extends Component {
     return (
       <div className="post-wrapper">
         <div className="content-wrapper">
-          <p className="post-title">{this.state.post.title}</p>
+          <h1 className="post-title">{this.state.post.title}</h1>
           <div className="first-post">
             <div className="author-info">
              <p>{this.state.post.user_id}</p>

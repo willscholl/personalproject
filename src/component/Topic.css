@@ -21,4 +21,9 @@
 }
 .post-info{
   display: flex;
+  flex-direction: column;
+  
+}
+.post-user-info{
+
 }

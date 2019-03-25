@@ -31,7 +31,7 @@ class Nav extends Component {
     const { id } = this.props;
     return (
       <header className="nav-wrapper">
-        <div className="Logo-div">LOGO</div>
+        <div className="Logo-div"><img src='./../assets/Screen Shot 2019-03-25 at 12.48.24 PM (2).png' /></div>
         <div className="nav-buttons">
           <Link to="/">
             <button className="forum-button">HOME</button>

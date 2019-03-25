@@ -4,6 +4,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { updateUser, clearUser } from "./../ducks/reducer";
 import "./Dashboard.css";
+import { Link } from 'react-router-dom';
 // import Nav from './Nav'
 
 class Dashboard extends Component {
@@ -70,13 +71,16 @@ class Dashboard extends Component {
     // console.log(this.getNews)
     // console.log(this.getTop5)
     const top5mapped = this.state.top5.map((post, i) => {
+      console.log(post)
       return (
         <div key={i} className='top5-wrapper'>
           <div className='top5-user'>
-            <img style={{width: '50px'}} src={post.post.profile_pic} alt=''/>
+            <img className='profile-pic' style={{width: '50px', height: '50px'}} src={post.post.profile_pic} alt=''/>
+            <p>{post.post.username}</p>
           </div>
-          <div>
-            <p>{post.post.title}</p>
+          <div className='top5-content'>
+            <Link to={`/forum/` + post.post.label + '/' + post.post_id} >{post.post.title}</Link>
+            <div style={{height: '20px', overflow:"hidden"}}><div dangerouslySetInnerHTML={{ __html: post.post.content}}></div></div>
           </div>
         </div>
       )
@@ -87,7 +91,7 @@ class Dashboard extends Component {
           <div style={{
               // overflowY: "scroll",
               height: "500px",
-              width: "400px",
+              width: "600px",
               margin: "100px auto",
               border: "1px solid black",
               background: 'lightgrey'

@@ -28,11 +28,14 @@ class Topic extends Component {
 
   render() {
     const discussionsMapped = this.state.discussions.map(discussion => {
+      console.log(discussion)
       return (
         <div className="discussions-wrapper" key={discussion.id}>
+          <div className='post-user-info'>
+            {discussion.username}
+          </div>
           <div className='post-info'>
-            <Link to={`/forum/Car & Automotive/` + discussion.id}>{discussion.title}</Link>
-            
+            <Link to={`/forum/` + discussion.label + `/` + discussion.id}>{discussion.title}</Link>
             <div style={{height: '20px', overflow:"hidden"}}><div dangerouslySetInnerHTML={{ __html: discussion.content}}></div></div>
           </div>
         </div>
