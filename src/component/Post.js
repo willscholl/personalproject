@@ -215,9 +215,15 @@ class Post extends Component {
         return (
           <div className="first-reply" key={i}>
             <div className="author-info">
-              <p>{reply.user_id}</p>
+              <p>{reply.username}</p>
               <div>
                 <img className='author-pic' src={reply.profile_pic} width="70px" alt="profilepicture" />
+              </div>
+              <div>
+                <p>Location: {this.state.post.location}</p>
+                <p>Year: {this.state.post.year}</p>
+                <p>Make: {this.state.post.make}</p>
+                <p>Model: {this.state.post.model}</p>
               </div>
             </div>
             <div className="reply-content-wrapper">
@@ -260,9 +266,15 @@ class Post extends Component {
           <h1 className="post-title">{this.state.post.title}</h1>
           <div className="first-post">
             <div className="author-info">
-             <p>{this.state.post.user_id}</p>
-              <div>
+              <p>{this.state.post.username}</p>
+              <div style={{marginBottom: "10px"}}>
                 <img className="author-pic" src={this.state.post.profile_pic} alt="profilepicture" />
+              </div>
+              <div>
+                <p>Location: {this.state.post.location}</p>
+                <p>Year: {this.state.post.year}</p>
+                <p>Make: {this.state.post.make}</p>
+                <p>Model: {this.state.post.model}</p>
               </div>
             </div>
             <div className="post-content-wrapper">

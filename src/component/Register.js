@@ -3,7 +3,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { updateUser } from "./../ducks/reducer";
-import "./Auth.css"
+import "./Auth.css";
+import TextField from "@material-ui/core/TextField";
 
 class Register extends Component {
   constructor(props) {
@@ -21,11 +22,11 @@ class Register extends Component {
     });
   }
 
-   register = async () => {
+  register = async () => {
     let user = {
       username: this.state.username,
       email: this.state.email,
-      password: this.state.password,
+      password: this.state.password
     };
     try {
       let res = await axios.post("/auth/register", user);
@@ -37,29 +38,40 @@ class Register extends Component {
       console.log(err);
     }
     this.setState({
-      username: '',
-      email: '',
-      password: ''
-    })
-  }
+      username: "",
+      email: "",
+      password: ""
+    });
+  };
 
   render() {
     const { username, email, password } = this.state;
     return (
-      <div>
-        <div className='login-body'>
-          <input
-            placeholder="Username" 
+      <div className="auth-wrapper">
+        <div className="login-body">
+          <TextField
+            id="Username"
+            className="username-register"
+            label="Username"
+            margin="normal"
+            type="username"
             value={username}
             onChange={e => this.handleChange("username", e.target.value)}
           />
-          <input
-            placeholder="Email" 
+          <TextField
+            id="Email"
+            className="email-register"
+            label="Email"
+            margin="normal"
+            type="email"
             value={email}
             onChange={e => this.handleChange("email", e.target.value)}
           />
-          <input
-            placeholder='password'
+          <TextField
+            id="password"
+            className='password-register'
+            label="Password"
+            margin="normal"
             type="password"
             value={password}
             onChange={e => this.handleChange("password", e.target.value)}

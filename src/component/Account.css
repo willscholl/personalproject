@@ -7,8 +7,8 @@
   justify-content: center;
 }
 .account-paper {
-  margin-top: 90px;
-  height: 600px;
+  margin: 90px;
+  height: 650px;
   width: 400px;
   background: grey;
   display: flex;
