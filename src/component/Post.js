@@ -56,9 +56,9 @@ class Post extends Component {
       post: {},
       reply: "",
       showQuill: false,
-      quillValue: '',
-      showSecondQuill: false, 
-      secondQuillValue: ''
+      quillValue: "",
+      showSecondQuill: false,
+      secondQuillValue: ""
     };
 
     this.quillRef = null;
@@ -75,26 +75,26 @@ class Post extends Component {
     this.attachQuillRefs();
   }
 
-  toggleQuill = (i) => {
-    let post = this.state.post
-    post.replies[i].showQuill = !post.replies[i].showQuill
-    this.setState({post})
-  }
+  toggleQuill = i => {
+    let post = this.state.post;
+    post.replies[i].showQuill = !post.replies[i].showQuill;
+    this.setState({ post });
+  };
 
   toggleSecondQuill = () => {
-    this.setState({showSecondQuill: !this.state.showSecondQuill})
-  }
+    this.setState({ showSecondQuill: !this.state.showSecondQuill });
+  };
 
-  handlePostQuillChange = (html) => {
-    this.setState({secondQuillValue: html})
-  }
+  handlePostQuillChange = html => {
+    this.setState({ secondQuillValue: html });
+  };
 
   handleReplyQuillChange = (html, i) => {
-    let post = this.state.post
-    post.replies[i].quillValue = html
+    let post = this.state.post;
+    post.replies[i].quillValue = html;
     // console.log(post.replies[i].quillValue)
-    this.setState({post})
-  }
+    this.setState({ post });
+  };
 
   getUser = async () => {
     const { id } = this.props;
@@ -126,7 +126,6 @@ class Post extends Component {
     });
   }
 
-
   getPost = async () => {
     // console.log(this.props.match.params);
     const { post } = this.state;
@@ -135,39 +134,39 @@ class Post extends Component {
     if (res.data.replies) {
       for (let i = 0; i < res.data.replies.length; i++) {
         res.data.replies[i].showQuill = false;
-        res.data.replies[i].quillValue = res.data.replies[i].reply
+        res.data.replies[i].quillValue = res.data.replies[i].reply;
       }
     }
     this.setState({ post: res.data, secondQuillValue: res.data.content });
     console.log(res.data);
   };
 
-  createReply = async () => { 
+  createReply = async () => {
     let reply = {
       reply: this.state.reply,
       post_id: this.state.post.id
     };
-    console.log(reply)
+    console.log(reply);
     try {
       await axios.post("/api/reply", reply);
-      this.getPost()
-      this.setState({showQuill: false, reply: ''})
+      this.getPost();
+      this.setState({ showQuill: false, reply: "" });
     } catch (err) {
       // alert("Please fill out the required fields");
     }
   };
 
-  saveReply = async (i) => {
+  saveReply = async i => {
     let updatedReply = {
       reply: this.state.post.replies[i].quillValue,
       reply_id: this.state.post.replies[i].reply_id
-    }
+    };
     try {
-      await axios.put("/api/reply", updatedReply)
-      this.getPost()
-      this.setState({showQuill: false})
+      await axios.put("/api/reply", updatedReply);
+      this.getPost();
+      this.setState({ showQuill: false });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -175,39 +174,39 @@ class Post extends Component {
     let updatedPost = {
       content: this.state.secondQuillValue,
       post_id: this.state.post.id
-    }
+    };
     try {
-      await axios.put("/api/post", updatedPost)
-      this.getPost()
-      this.setState({showSecondQuill: false})
+      await axios.put("/api/post", updatedPost);
+      this.getPost();
+      this.setState({ showSecondQuill: false });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
-  deleteReply = async (i) => {
-    let reply_id = this.state.post.replies[i].reply_id
+  deleteReply = async i => {
+    let reply_id = this.state.post.replies[i].reply_id;
     try {
-      await axios.delete(`/api/reply/${reply_id}`)
-      this.getPost()
-      this.setState({showSecondQuill: false})
+      await axios.delete(`/api/reply/${reply_id}`);
+      this.getPost();
+      this.setState({ showSecondQuill: false });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
   deletePost = async () => {
-    let { id } = this.state.post
+    let { id } = this.state.post;
     try {
-      await axios.delete(`/api/post/${id}`)
-      this.props.history.push('/forum')
+      await axios.delete(`/api/post/${id}`);
+      this.props.history.push("/forum");
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
   render() {
-    console.log(this.state)
+    console.log(this.state);
     let repliesMapped;
     if (this.state.post.replies) {
       // const { id } = this.props
@@ -217,7 +216,12 @@ class Post extends Component {
             <div className="author-info">
               <p>{reply.username}</p>
               <div>
-                <img className='author-pic' src={reply.profile_pic} width="70px" alt="profilepicture" />
+                <img
+                  className="author-pic"
+                  src={reply.profile_pic}
+                  width="70px"
+                  alt="profilepicture"
+                />
               </div>
               <div>
                 <p>Location: {this.state.post.location}</p>
@@ -228,19 +232,35 @@ class Post extends Component {
             </div>
             <div className="reply-content-wrapper">
               <div className="reply-upper-info">
-                <p >{reply.date}</p>
-                <div className='edit-delete-butts'> 
-                {reply.showQuill ?  <React.Fragment><button onClick={()=>this.saveReply(i)}>Save</button><button onClick={() =>this.deleteReply(i)}>Delete</button></React.Fragment>: <React.Fragment> {reply.user_id === this.props.id ? <button onClick={() => this.toggleQuill(i)}>Edit</button> : null } </React.Fragment> } </div>
+                <p>{reply.date}</p>
+                <div className="edit-delete-butts">
+                  {reply.showQuill ? (
+                    <React.Fragment>
+                      <button onClick={() => this.saveReply(i)}>Save</button>
+                      <button onClick={() => this.deleteReply(i)}>
+                        Delete
+                      </button>
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      {" "}
+                      {reply.user_id === this.props.id ? (
+                        <button onClick={() => this.toggleQuill(i)}>
+                          Edit
+                        </button>
+                      ) : null}{" "}
+                    </React.Fragment>
+                  )}{" "}
+                </div>
               </div>
               <div>
-                { reply.showQuill 
-                ?
+                {reply.showQuill ? (
                   <ReactQuill
                     ref={el => {
                       this.reactQuillRef = el;
                     }}
                     theme={"snow"}
-                    onChange={(html) => this.handleReplyQuillChange(html, i)}
+                    onChange={html => this.handleReplyQuillChange(html, i)}
                     modules={Editor.modules}
                     formats={Editor.formats}
                     defaultValue={reply.quillValue}
@@ -248,18 +268,18 @@ class Post extends Component {
                     placeholder="Write your reply here..."
                     className="quillbox-reply"
                   />
-                :
+                ) : (
                   <div
                     dangerouslySetInnerHTML={{ __html: reply.reply }}
                     className="post-content"
                   />
-                }
+                )}
               </div>
             </div>
           </div>
         );
       });
-    } 
+    }
     return (
       <div className="post-wrapper">
         <div className="content-wrapper">
@@ -267,8 +287,12 @@ class Post extends Component {
           <div className="first-post">
             <div className="author-info">
               <p>{this.state.post.username}</p>
-              <div style={{marginBottom: "10px"}}>
-                <img className="author-pic" src={this.state.post.profile_pic} alt="profilepicture" />
+              <div style={{ marginBottom: "10px" }}>
+                <img
+                  className="author-pic"
+                  src={this.state.post.profile_pic}
+                  alt="profilepicture"
+                />
               </div>
               <div>
                 <p>Location: {this.state.post.location}</p>
@@ -280,19 +304,32 @@ class Post extends Component {
             <div className="post-content-wrapper">
               <div className="post-upper-info">
                 <p>{this.state.post.date}</p>
-                <div className='edit-delete-butts'>
-                  {this.state.showSecondQuill ?  <React.Fragment><button onClick={() => this.updatePost()}>Save</button><button onClick={() => this.deletePost()}>Delete</button></React.Fragment>: <React.Fragment> {this.state.post.user_id === this.props.id ? <button onClick={() => this.toggleSecondQuill()}>Edit</button> : null } </React.Fragment> }
+                <div className="edit-delete-butts">
+                  {this.state.showSecondQuill ? (
+                    <React.Fragment>
+                      <button onClick={() => this.updatePost()}>Save</button>
+                      <button onClick={() => this.deletePost()}>Delete</button>
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      {" "}
+                      {this.state.post.user_id === this.props.id ? (
+                        <button onClick={() => this.toggleSecondQuill()}>
+                          Edit
+                        </button>
+                      ) : null}{" "}
+                    </React.Fragment>
+                  )}
                 </div>
               </div>
               <div>
-                { this.state.showSecondQuill 
-                ?
+                {this.state.showSecondQuill ? (
                   <ReactQuill
                     ref={el => {
                       this.reactQuillRef = el;
                     }}
                     theme={"snow"}
-                    onChange={(html) => this.handlePostQuillChange(html)}
+                    onChange={html => this.handlePostQuillChange(html)}
                     modules={Editor.modules}
                     formats={Editor.formats}
                     defaultValue={this.state.secondQuillValue}
@@ -300,21 +337,27 @@ class Post extends Component {
                     placeholder="Write your post here..."
                     className="quillbox-reply"
                   />
-                :
+                ) : (
                   <div
-                    dangerouslySetInnerHTML={{ __html: this.state.post.content }}
+                    dangerouslySetInnerHTML={{
+                      __html: this.state.post.content
+                    }}
                     className="post-content"
                   />
-                }
+                )}
               </div>
               <div>
-                <img style={{ width: '300px'}} src={this.state.post.photo} alt=''/>
+                <img
+                  style={{ width: "300px" }}
+                  src={this.state.post.photo}
+                  alt=""
+                />
               </div>
             </div>
           </div>
           {repliesMapped}
           <div className="create-reply-wrapper">
-            <img className="user-img" src={this.props.profile_pic} alt=''/>
+            <img className="user-img" src={this.props.profile_pic} alt="" />
             <div className="reply-input">
               <div className="reply-input-wrapper">
                 {this.state.showQuill ? (
@@ -332,7 +375,12 @@ class Post extends Component {
                       placeholder="Write your reply here..."
                       className="quillbox-reply"
                     />
-                    <button style={{ marginBottom: '10px'}} onClick={this.createReply}>Submit</button>
+                    <button
+                      style={{ marginBottom: "10px" }}
+                      onClick={this.createReply}
+                    >
+                      Submit
+                    </button>
                   </div>
                 ) : (
                   <div
@@ -360,6 +408,4 @@ const mapStateToProps = reduxState => {
   };
 };
 
-export default connect(
-  mapStateToProps
-)(Post);
+export default connect(mapStateToProps)(Post);

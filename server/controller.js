@@ -57,17 +57,18 @@ module.exports = {
 
   updateUser: async (req, res) => {
     try {
-      const { username, location, email, year, make, model, profile_pic } = req.body;
+      const {
+        username,
+        location,
+        email,
+        year,
+        make,
+        model,
+        profile_pic
+      } = req.body;
       console.log(1111111111, req.body);
       const { id } = req.session.user;
       const db = req.app.get("db");
-      // let takenUsername = await db.check_username({ username });
-      // let takenEmail = await db.check_email({ email });
-      // takenUsername = +takenUsername[0].count;
-      // takenEmail = +takenEmail[0].count;
-      // if (takenUsername !== 0 || takenEmail !== 0) {
-      //   return res.sendStatus(409);
-      // }
       let user = await db.update_user({
         id,
         username,
@@ -86,6 +87,13 @@ module.exports = {
       console.log("error updating user:", error);
       res.status(500).send("error updating user");
     }
+    // let takenUsername = await db.check_username({ username });
+    // let takenEmail = await db.check_email({ email });
+    // takenUsername = +takenUsername[0].count;
+    // takenEmail = +takenEmail[0].count;
+    // if (takenUsername !== 0 || takenEmail !== 0) {
+    //   return res.sendStatus(409);
+    // }
   },
 
   login: async (req, res) => {
@@ -215,9 +223,9 @@ module.exports = {
     const db = req.app.get("db");
     req.params.id = parseInt(req.params.id);
     let { id } = req.params;
-    console.log('the id is not here   .... ',id);
+    console.log("the id is not here   .... ", id);
     let getpost = await db.get_post([id]);
-    console.log(getpost)
+    console.log(getpost);
     getpost[0] = getpost[0].row_to_json;
     // console.log(getpost[0]);
     res.status(200).send(getpost[0]);
@@ -225,9 +233,8 @@ module.exports = {
 
   getTop5: async (req, res) => {
     const db = req.app.get("db");
-    let gettop5 = await db.get_top5()
-    console.log(gettop5)
+    let gettop5 = await db.get_top5();
+    console.log(gettop5);
     res.status(200).send(gettop5);
-
   }
 };

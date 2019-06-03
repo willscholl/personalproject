@@ -46,7 +46,9 @@ class Nav extends Component {
             </button>
           ) : (
             <Link to="/login">
-              <button className="forum-button"> Login </button>
+              <button className="forum-button">
+                Login 
+              </button>
             </Link>
           )}
           <Link to="/account">

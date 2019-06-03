@@ -14,6 +14,17 @@ import { v4 as randomString } from "uuid";
 import Dropzone from "react-dropzone";
 import { GridLoader } from "react-spinners";
 
+const styles = theme => ({
+  container: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit
+  }
+});
+
 // const Checkbox = props => <input type="checkbox" {...props} />;
 const customStyles = {
   control: (base, state) => ({
@@ -29,17 +40,6 @@ const customStyles = {
     }
   })
 };
-
-const styles = theme => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap"
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  }
-});
 
 const Editor = {};
 Editor.modules = {};
@@ -97,7 +97,7 @@ class NewDiscussion extends Component {
       isClearable: true,
       imageToUpload: null,
       isUploading: false,
-      url: "",
+      url: ""
     };
 
     this.quillRef = null;
@@ -269,9 +269,6 @@ class NewDiscussion extends Component {
               placeholder="Testing Grounds"
               className="quillbox"
             />
-          </div>
-          <div className="content-quill">
-            <div id="quill-test" />
           </div>
           <div className="content-attachments">
             <Dropzone
